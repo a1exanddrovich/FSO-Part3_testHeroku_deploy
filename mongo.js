@@ -19,21 +19,14 @@ const Note = mongoose.model("Note", noteSchema)
 
 mongoose
     .connect(url)
-    .then((result) => {
-        console.log("Connected successfully!")
-
-        const note = new Note({
-            content: 'HTML is Easy',
-            date: new Date(),
-            important: true,
-        })
-
-        return note.save()
-    })
-    .then(() => {
-        console.log("A note saved!")
-        return mongoose.connection.close()
-    })
     .catch((error) => {
         console.log("Error: ", error)
     })
+
+Note.find({}).then(result => {
+    result.forEach(note => {
+        console.log(note)
+    })
+
+    mongoose.connection.close()
+})
